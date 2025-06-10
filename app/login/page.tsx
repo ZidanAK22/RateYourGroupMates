@@ -25,7 +25,7 @@ export default function LoginPage() {
     };
 
     return (
-        <div className="h-screen flex flex-col items-center justify-center bg-primary px-20 py-8 rounded-xl">
+        <div className="h-screen flex flex-col items-center justify-center bg-primary px-20 py-8">
             {/* Header */}
             <div className={" flex flex-col items-center"}>
                 <h1 className="text-[32px] font-bold">Welcome Back</h1>
@@ -43,7 +43,7 @@ export default function LoginPage() {
                 <input id="email" name="email" type="email" required className="mb-8" />
                 <label htmlFor="password">Password:</label>
                 <div className="flex flex-row space-x-4 mb-8">
-                    <input id="password" name="password" type={isVisible ? "text" : "password"} required />
+                    <input id="password" name="password" type={isVisible ? "text" : "password"} required  />
                     <button
                         className="focus:outline-none flex items-center"
                         type="button"
@@ -58,7 +58,7 @@ export default function LoginPage() {
                     </button>
                 </div>
 
-                <div className="flex space-x-8 justify-center">
+                <div className="flex space-x-8 justify-center hover:border-1 border-white rounded-lg">
                     <button
                         type="submit"
                         className={`bg-accent rounded-lg p-4 ${isLoggingIn ? "opacity-50 cursor-not-allowed" : ""}`}
