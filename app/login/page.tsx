@@ -1,15 +1,12 @@
 'use client'
 import { useState } from "react";
-import { useRouter } from "next/navigation";
 import { EyeFilledIcon } from "../ui/EyeFilledIcon";
 import { EyeSlashFilledIcon } from "../ui/EyeSlashFilledIcon";
 import { login } from "./action";
 
 export default function LoginPage() {
     const [isVisible, setIsVisible] = useState(false);
-    const [isLoggingIn, setIsLoggingIn] = useState(false); // Loading state for login button
-    const [isSigningUp, setIsSigningUp] = useState(false); // Loading state for signup button
-    const router = useRouter();
+    const [isLoggingIn, setIsLoggingIn] = useState(false); // Loading state for login button    
 
     const toggleVisibility = () => setIsVisible(!isVisible);
 
