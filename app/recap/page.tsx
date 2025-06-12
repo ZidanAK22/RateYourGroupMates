@@ -52,7 +52,17 @@ const columns: ColumnDef<RecapRow>[] = [
     { accessorKey: "rater_name", header: "Rater Name" },
     { accessorKey: "rating_score", header: "Score" },
     { accessorKey: "rating_comment", header: "Comment" },
-    { accessorKey: "created_at", header: "Timestamp" },
+    {
+        accessorKey: "created_at",
+        header: "Timestamp",
+        cell: ({ getValue }) => {
+            const value = getValue() as string;
+            const date = new Date(value);
+            // Format: YYYY-MM-DD HH:mm
+            const formatted = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
+            return <span>{formatted}</span>;
+        },
+    },
 ];
 
 export default function RecapPage() {
@@ -86,7 +96,7 @@ export default function RecapPage() {
             }
             // Only keep the latest review for each (rater_id, ratee_id) pair
             const latestMap = new Map<string, RawRatingRow>();
-            for (const row of (data as RawRatingRow[])) {
+            for (const row of (data as unknown as RawRatingRow[])) {
                 const key = row.rater_id + "-" + row.ratee_id;
                 if (!latestMap.has(key) || new Date(row.created_at) > new Date(latestMap.get(key)!.created_at)) {
                     latestMap.set(key, row);
@@ -139,7 +149,7 @@ export default function RecapPage() {
                             {table.getHeaderGroups().map((headerGroup) => (
                                 <tr key={headerGroup.id}>
                                     {headerGroup.headers.map((header) => (
-                                        <th key={header.id} className="border px-4 py-2 bg-gray-100">
+                                        <th key={header.id} className="border px-4 py-2 bg-gray-100 text-black font-bold text-lg">
                                             {flexRender(header.column.columnDef.header, header.getContext())}
                                         </th>
                                     ))}
@@ -155,7 +165,7 @@ export default function RecapPage() {
                                 table.getRowModel().rows.map((row) => (
                                     <tr key={row.id}>
                                         {row.getVisibleCells().map((cell) => (
-                                            <td key={cell.id} className="border px-4 py-2">
+                                            <td key={cell.id} className="border px-4 py-2 text-white font-bold text-lg">
                                                 {flexRender(cell.column.columnDef.cell, cell.getContext())}
                                             </td>
                                         ))}
