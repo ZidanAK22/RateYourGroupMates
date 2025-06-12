@@ -22,6 +22,27 @@ interface RecapRow {
     created_at: string;
 }
 
+interface RawRatingRow {
+    rating_id: number;
+    rater_id: string;
+    ratee_id: string;
+    rating_score: number;
+    rating_comment: string | null;
+    created_at: string;
+    rater: {
+        nrp: string;
+        full_name: string;
+        group_id: string;
+        group: { group_id: string; group_name: string } | null;
+    };
+    ratee: {
+        nrp: string;
+        full_name: string;
+        group_id: string;
+        group: { group_id: string; group_name: string } | null;
+    };
+}
+
 const columns: ColumnDef<RecapRow>[] = [
     { accessorKey: "group_id", header: "Group ID" },
     { accessorKey: "group_name", header: "Group Name" },
@@ -64,10 +85,10 @@ export default function RecapPage() {
                 return;
             }
             // Only keep the latest review for each (rater_id, ratee_id) pair
-            const latestMap = new Map<string, any>();
-            for (const row of data as any[]) {
+            const latestMap = new Map<string, RawRatingRow>();
+            for (const row of (data as RawRatingRow[])) {
                 const key = row.rater_id + "-" + row.ratee_id;
-                if (!latestMap.has(key) || new Date(row.created_at) > new Date(latestMap.get(key).created_at)) {
+                if (!latestMap.has(key) || new Date(row.created_at) > new Date(latestMap.get(key)!.created_at)) {
                     latestMap.set(key, row);
                 }
             }
