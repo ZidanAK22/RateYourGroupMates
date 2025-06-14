@@ -7,7 +7,7 @@ export default async function Navbar() {
 
 
     return (
-        <nav className="w-full flex flex-row items-end text-xl">
+        <nav className="w-full flex flex-row justify-center items-end text-xl">
             {user ? (
                 <>
                     <form action="/auth/signout" method="post">
@@ -15,6 +15,10 @@ export default async function Navbar() {
                             Sign out
                         </button>
                     </form>
+
+                    <a href="/recap" className="ml-12 text-2xl font-bold">
+                        Recap
+                    </a>
                 </>
             ) : null}
         </nav >
