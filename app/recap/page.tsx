@@ -74,7 +74,7 @@ const columns: ColumnDef<RecapRow>[] = [
                 // Format: YYYY-MM-DD HH:mm
                 const formatted = `${date.getFullYear()}-${String(date.getMonth() + 1).padStart(2, "0")}-${String(date.getDate()).padStart(2, "0")} ${String(date.getHours()).padStart(2, "0")}:${String(date.getMinutes()).padStart(2, "0")}`;
                 return <span>{formatted}</span>;
-            } catch (e) {
+            } catch (error) {
                 return <span>Invalid Date</span>
             }
         },
